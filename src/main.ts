@@ -34,3 +34,8 @@ app.use(router)
 app.use(MathFormatterPlugin);
 app.use(vuetify)
 app.mount('#app')
+
+
+//防抖函数
+
+

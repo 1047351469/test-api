@@ -4,15 +4,24 @@ excel 拖动行四角shift  换行alt+enter
 f4将相对转绝对
 字符串 trim concat TEXT数组转文本 FIND SUBSTITUTE替换
  ROW  COLUMN
+https://regex101.com/
+字符串 split replace search match
+/前端/gi大小写
+reg test exec
+边界符 单词/\bhello\b/  /\Bhello\B/
+ /^hello$/
+ 量词 *0词或多次 ?0或1 +>=1 {n} {n,} {n,m}
+ 元子符 [a-zA-Z0-9_] \d \w字母_  \s任意空白字符 .除了\n
+  2024-11-22 date.replace(/(\d{4})[-\/](\d{2})[-\/](\d{2})/, "$3/$2/$1");
+  或|
+  anyrule f1
+  [\u3040-\u309F] 平假名
+  [\u30A0-\u30FF] 片假名
+  [\u4E00-\u9FAF] 汉字
+  [\u3040-\u30FF\u4E00-\u9FAF] 日语任何字符
+  [\u3040-\u30FF\u4E00-\u9FAF\u3000-\u303F]  日语及全角标点符号
 
 
-T01,1,一
-,2,二
-,3,三
-,4,四
-T02,5,五
-,6,六
-T03,7,七
 
 
 
