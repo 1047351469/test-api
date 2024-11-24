@@ -124,13 +124,13 @@ function parseToNestedObject(data) {
   T03	0	4
   `;
   
-  // 调用函数
-  const nestedObject = parseToNestedObject(inputData);
-  console.log(nestedObject);
+  // // 调用函数
+  // const nestedObject = parseToNestedObject(inputData);
+  // console.log(nestedObject);
   
-  // 示例访问
-  console.log(nestedObject.T01["1"]); // 输出: x
-  console.log(nestedObject.T02["11"]); // 输出: 3
-  console.log(nestedObject.T03["0"]); // 输出: 4
+  // // 示例访问
+  // console.log(nestedObject.T01["1"]); // 输出: x
+  // console.log(nestedObject.T02["11"]); // 输出: 3
+  // console.log(nestedObject.T03["0"]); // 输出: 4
   
   

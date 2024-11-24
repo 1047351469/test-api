@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Print Object to Page</title>
+</head>
+<body>
+    <h1>对象内容</h1>
+    <textarea id="output" rows="20" cols="50"></textarea>
+    <button onclick="copyText()">复制到剪贴板</button>
+
+    <script>
+        // 示例对象
+        const myObject = {
+            name: "John",
+            age: 30,
+            city: "New York",
+            skills: ["JavaScript", "HTML", "CSS"]
+        };
+
+        // 将对象转换为格式化字符串
+        const jsonString = JSON.stringify(myObject, null, 2);
+
+        // 将内容插入到页面的 textarea 中
+        const outputElement = document.getElementById("output");
+        outputElement.value = jsonString;
+
+        // 复制到剪贴板的功能
+        function copyText() {
+            outputElement.select(); // 选中内容
+            document.execCommand("copy"); // 执行复制
+            alert("已复制到剪贴板！");
+        }
+    </script>
+</body>
+</html>

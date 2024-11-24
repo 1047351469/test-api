@@ -4,6 +4,7 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 // Vuetify
 import 'vuetify/styles'
+// import '@/assets/materialdesignicons.min.css' 
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
@@ -13,6 +14,9 @@ import * as directives from 'vuetify/directives'
 const vuetify = createVuetify({
   components,
   directives,
+  icons: {
+    defaultSet: 'mdi'
+  },
 })
   
 import MathFormatterPlugin from '@/plugin/mathFormatterPlugin.js';
@@ -22,6 +26,7 @@ import router from './router'
 // import  "@/utils/searchObj/test.js"
 // import "@/utils//logSetting/test.js"
 import "@/utils/excel/test.js"
+import "@/utils/lodash.js"
 const app = createApp(App)
 
 app.use(createPinia())

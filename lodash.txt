@@ -1,0 +1,19 @@
+数组
+ 交集.intersection、并集union、补集
+excel 拖动行四角shift  换行alt+enter
+f4将相对转绝对
+字符串 trim concat TEXT数组转文本 FIND SUBSTITUTE替换
+ ROW  COLUMN
+
+
+T01,1,一
+,2,二
+,3,三
+,4,四
+T02,5,五
+,6,六
+T03,7,七
+
+
+
+ 

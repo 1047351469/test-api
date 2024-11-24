@@ -19,6 +19,11 @@ const router = createRouter({
       name: 'trRender',
       component: () => import('../views/TestTrRender.vue'),
     },
+    {
+      path: '/xTable',
+      name: 'xTable',
+      component: () => import('../views/xPage.vue'),
+    },
   ],
 })
 
