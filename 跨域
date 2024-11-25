@@ -1,1 +1,6 @@
 msedge --disable-web-security --user-data-dir="C:\edge-dev"
+
+csvjson
+tablecovertonline
+
+=SUBSTITUTE(A1, CHAR(10), " ")
