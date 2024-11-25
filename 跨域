@@ -3,4 +3,5 @@ msedge --disable-web-security --user-data-dir="C:\edge-dev"
 csvjson
 tablecovertonline
 
-=SUBSTITUTE(A1, CHAR(10), " ")
+=SUBSTITUTE(A1, CHAR(10), " ")换行符
+=ISNUMBER(FIND("a", A1))新建规则 要选相对

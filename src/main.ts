@@ -25,8 +25,9 @@ import router from './router'
 // import "@/utils/dayjs/test.js"
 // import  "@/utils/searchObj/test.js"
 // import "@/utils//logSetting/test.js"
-import "@/utils/excel/test.js"
-import "@/utils/lodash.js"
+// import "@/utils/excel/test.js"
+// import "@/utils/lodash.js"
+import "@/promise/index.js"
 const app = createApp(App)
 
 app.use(createPinia())
