@@ -1,0 +1,1 @@
+msedge --disable-web-security --user-data-dir="C:\edge-dev"
