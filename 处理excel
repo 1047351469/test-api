@@ -25,3 +25,33 @@ Bob\t30\tLos Angeles
 Charlie\t35\tChicago`;
 
 console.log(parseTextToObjects(inputText));
+
+
+function moveObjectByCondition(objects, moveCondition, targetCondition) {
+  // 查找索引
+  const moveIndex = objects.findIndex(moveCondition);
+  const targetIndex = objects.findIndex(targetCondition);
+
+  // 检查索引是否有效
+  if (moveIndex === -1 || targetIndex === -1 || moveIndex === targetIndex) {
+    return objects; // 条件无效或索引无效时返回原数组
+  }
+
+  // 取出满足条件的对象
+  const [item] = objects.splice(moveIndex, 1);
+
+  // 插入到目标位置后面
+  const actualTargetIndex = moveIndex < targetIndex ? targetIndex - 1 : targetIndex;
+  objects.splice(actualTargetIndex + 1, 0, item);
+
+  return objects;
+}
+
+// 示例调用
+const result = moveObjectByCondition(
+  objects,
+  obj => obj.name === "Bob", // 要移动的条件
+  obj => obj.name === "Charlie" // 目标条件
+);
+
+console.log(result);
