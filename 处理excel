@@ -1,0 +1,27 @@
+function parseTextToObjects(text) {
+  // 按行分割
+  const lines = text.split('\n').filter(line => line.trim() !== '');
+  
+  // 获取字段名称（第一行）
+  const keys = lines[0].split('\t');
+  
+  // 遍历后续行，生成对象数组
+  const objects = lines.slice(1).map(line => {
+    const values = line.split('\t');
+    const obj = {};
+    keys.forEach((key, index) => {
+      obj[key] = values[index];
+    });
+    return obj;
+  });
+
+  return objects;
+}
+
+// 示例调用
+const inputText = `name\tage\tcity
+Alice\t25\tNew York
+Bob\t30\tLos Angeles
+Charlie\t35\tChicago`;
+
+console.log(parseTextToObjects(inputText));
