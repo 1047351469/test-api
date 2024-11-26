@@ -1,0 +1,63 @@
+<template>
+  <v-container>
+    <v-data-table
+      :headers="headers"
+      :items="items"
+      item-value="id"
+      item-class="getItemClass"
+      show-select
+      @click:row="onRowClick"
+    >
+      <template v-slot:[`data-table-select`]="{ isSelected, select, item }">
+        <v-checkbox
+          :input-value="isSelected"
+          @click.stop="select(!isSelected)"
+          :disabled="isDisabled(item)"
+        />
+      </template>
+    </v-data-table>
+  </v-container>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      headers: [
+        { text: "ID", value: "id" },
+        { text: "Name", value: "name" },
+        { text: "Age", value: "age" },
+      ],
+      items: [
+        { id: 1, name: "Alice", age: 25 },
+        { id: 2, name: "Bob", age: 30 },
+        { id: 3, name: "Charlie", age: 20 },
+      ],
+    };
+  },
+  methods: {
+    // 根据条件设置行样式
+    getItemClass(item) {
+      return item.age < 25 ? "greyed-out" : "";
+    },
+    // 禁用选择条件
+    isDisabled(item) {
+      return item.age < 25;
+    },
+    // 防止禁用的行被点击选中
+    onRowClick(item, event) {
+      if (this.isDisabled(item)) {
+        event.preventDefault();
+      }
+    },
+  },
+};
+</script>
+
+<style scoped>
+.greyed-out {
+  background-color: #f0f0f0;
+  color: #aaa;
+  pointer-events: none; /* 禁用鼠标交互 */
+}
+</style>
