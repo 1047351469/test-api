@@ -73,3 +73,9 @@ function incrementLastPart(input) {
 // 示例调用
 console.log(incrementLastPart("1-1")); // 输出 "1-2"
 console.log(incrementLastPart("10-5")); // 输出 "10-6"
+
+function colorRowItem(item) {
+  if (item.item.some_property != undefined && item.item.some_property.includes("Freigegeben")) {
+    return { class: 'some_text' };
+  } 
+}
