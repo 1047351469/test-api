@@ -55,3 +55,21 @@ const result = moveObjectByCondition(
 );
 
 console.log(result);
+
+function incrementLastPart(input) {
+  // 使用 '-' 分割字符串
+  const parts = input.split('-');
+  
+  // 提取最后一部分并转换为数字
+  const lastPart = parseInt(parts[parts.length - 1], 10);
+  
+  // 将最后一部分加 1
+  parts[parts.length - 1] = (lastPart + 1).toString();
+  
+  // 将数组重新拼接为字符串
+  return parts.join('-');
+}
+
+// 示例调用
+console.log(incrementLastPart("1-1")); // 输出 "1-2"
+console.log(incrementLastPart("10-5")); // 输出 "10-6"
