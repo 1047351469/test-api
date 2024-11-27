@@ -1,0 +1,22 @@
+function convertTo24Hour(time) {
+  // 输入格式示例： "12:35 PM" 或 "01:45 AM"
+  const [timePart, meridiem] = time.split(" "); // 分割时间和 AM/PM
+  let [hours, minutes] = timePart.split(":").map(Number); // 分割小时和分钟
+
+  if (meridiem === "AM" && hours === 12) {
+    // AM 且是午夜 (12:XX AM) 转换为 0:XX
+    hours = 0;
+  } else if (meridiem === "PM" && hours !== 12) {
+    // PM 且不是正午 (12:XX PM) 转换为 12 + hours
+    hours += 12;
+  }
+
+  // 返回 24 小时制时间字符串，格式为 HH:MM
+  return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
+}
+
+// 示例调用
+console.log(convertTo24Hour("12:35 PM")); // 输出: "12:35"
+console.log(convertTo24Hour("12:35 AM")); // 输出: "00:35"
+console.log(convertTo24Hour("01:45 PM")); // 输出: "13:45"
+console.log(convertTo24Hour("01:45 AM")); // 输出: "01:45"
