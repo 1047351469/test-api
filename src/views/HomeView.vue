@@ -136,12 +136,26 @@ function convertTo24Hour(input) {
 const input = "102622 01:01PM";
 console.log(convertTo24Hour(input)); // 输出：2022/10/26 22:01
 
-
+import {showSnackbar} from "@/plugin/snackbar.js"
 
 onMounted(()=>{
  
  
 })
+
+// 显示成功消息
+showSnackbar({
+  message: "操作成功！",
+  color: "success",
+  timeout: 3000,
+});
+
+// 显示错误消息
+showSnackbar({
+  message: "发生错误！",
+  color: "error",
+  timeout: 5000,
+});
 
 
 
