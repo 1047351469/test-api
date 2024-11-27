@@ -12,7 +12,10 @@
     "type-check": "vue-tsc --build --force"
   },
   "dependencies": {
+    "@mdi/font": "^7.4.47",
     "axios-mock-adapter": "^2.1.0",
+    "dayjs": "^1.11.13",
+    "mdi": "^2.2.43",
     "pinia": "^2.2.6",
     "sass": "^1.81.0",
     "sass-loader": "^16.0.3",
