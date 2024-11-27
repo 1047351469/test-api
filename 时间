@@ -49,3 +49,5 @@ export default defineConfig({
 
 <link href="https://cdn.jsdelivr.net/npm/@mdi/font@7.3.0/css/materialdesignicons.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/@mdi/font@7.3.0/css/materialdesignicons.min.css" rel="stylesheet">
+
+<link href="https://unpkg.com/@mdi/font@7.3.0/css/materialdesignicons.min.css" rel="stylesheet">
