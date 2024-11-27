@@ -20,3 +20,29 @@ console.log(convertTo24Hour("12:35 PM")); // 输出: "12:35"
 console.log(convertTo24Hour("12:35 AM")); // 输出: "00:35"
 console.log(convertTo24Hour("01:45 PM")); // 输出: "13:45"
 console.log(convertTo24Hour("01:45 AM")); // 输出: "01:45"
+
+import { createVuetify } from 'vuetify';
+import { VBtn, VCard } from 'vuetify/components'; // 按需导入组件
+import 'vuetify/styles'; // 必须导入基础样式
+
+// 配置并导出 Vuetify 实例
+export default createVuetify({
+  components: {
+    VBtn,
+    VCard,
+  },
+});
+
+import { createApp } from 'vue';
+import App from './App.vue';
+import vuetify from './plugins/vuetify'; // 引入配置好的 Vuetify
+
+createApp(App).use(vuetify).mount('#app');
+
+export default defineConfig({
+  build: {
+    rollupOptions: {
+      treeshake: true, // 确保只保留使用的代码
+    },
+  },
+});
