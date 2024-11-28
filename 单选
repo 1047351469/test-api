@@ -1,0 +1,98 @@
+<template>
+  <v-container>
+    <!-- 表格 -->
+    <v-data-table
+      :headers="headers"
+      :items="paginatedItems"
+      :items-per-page="itemsPerPage"
+      class="elevation-1"
+    >
+      <template v-slot:body="{ items }">
+        <tr v-for="(item, index) in items" :key="item.id">
+          <td>
+            <input
+              type="radio"
+              :name="'row-radio'"
+              :value="item.id"
+              v-model="selectedId"
+              @change="onRadioChange"
+            />
+          </td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.age }}</td>
+        </tr>
+      </template>
+    </v-data-table>
+
+    <!-- 分页 -->
+    <v-pagination
+      v-model="currentPage"
+      :length="totalPages"
+      @input="updatePaginatedItems"
+    ></v-pagination>
+
+    <!-- 选中行信息 -->
+    <p>当前选中 ID：{{ selectedId }}</p>
+    <p>当前选中行数据：{{ selectedItem }}</p>
+  </v-container>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      headers: [
+        { text: "选择", value: "radio", sortable: false },
+        { text: "姓名", value: "name" },
+        { text: "年龄", value: "age" },
+      ],
+      items: [
+        { id: 1, name: "Alice", age: 25 },
+        { id: 2, name: "Bob", age: 30 },
+        { id: 3, name: "Charlie", age: 22 },
+        { id: 4, name: "David", age: 28 },
+        { id: 5, name: "Eva", age: 35 },
+        { id: 6, name: "Frank", age: 40 },
+        { id: 7, name: "Grace", age: 29 },
+        { id: 8, name: "Helen", age: 31 },
+        { id: 9, name: "Ivy", age: 24 },
+        { id: 10, name: "Jack", age: 27 },
+      ],
+      selectedId: null,
+      itemsPerPage: 2,
+      currentPage: 1,
+      paginatedItems: [],
+    };
+  },
+  computed: {
+    totalPages() {
+      return Math.ceil(this.items.length / this.itemsPerPage);
+    },
+    selectedItem() {
+      return this.items.find((item) => item.id === this.selectedId) || null;
+    },
+  },
+  methods: {
+    updatePaginatedItems() {
+      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+      const endIndex = startIndex + this.itemsPerPage;
+      this.paginatedItems = this.items.slice(startIndex, endIndex);
+    },
+    onRadioChange() {
+      console.log("当前选中 ID：", this.selectedId);
+    },
+  },
+  watch: {
+    currentPage: "updatePaginatedItems",
+  },
+  mounted() {
+    this.updatePaginatedItems();
+  },
+};
+</script>
+
+<style scoped>
+.v-data-table td {
+  vertical-align: middle;
+}
+</style>
