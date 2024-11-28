@@ -52,3 +52,43 @@ export default defineConfig({
 
 <link href="https://unpkg.com/@mdi/font@7.3.0/css/materialdesignicons.min.css" rel="stylesheet">
 https://github.com/Templarian/MaterialDesign-Webfont
+
+<template>
+  <v-container>
+    <v-pagination
+      v-model="page"
+      :length="5"
+      class="custom-pagination"
+    ></v-pagination>
+    <p>当前页码：{{ page }}</p>
+  </v-container>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      page: 1, // 当前选中页码
+    };
+  },
+};
+</script>
+
+<style scoped>
+/* 激活页码背景 */
+.custom-pagination .v-pagination__item--active {
+  background-color: #1976d2; /* 蓝色背景 */
+  color: #fff; /* 白色文字 */
+}
+
+/* 非激活页码背景 */
+.custom-pagination .v-pagination__item {
+  background-color: #f5f5f5; /* 浅灰色背景 */
+  color: #000; /* 黑色文字 */
+}
+
+/* 悬停效果 */
+.custom-pagination .v-pagination__item:hover {
+  background-color: #e0e0e0; /* 鼠标悬停时灰色背景 */
+}
+</style>
