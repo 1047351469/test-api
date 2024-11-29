@@ -1,0 +1,5 @@
+function wrapBetweenCharacters(input, targetChar) {
+  const escapedChar = targetChar.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+  const regex = new RegExp(`${escapedChar}(.*?)${escapedChar}`, 'g');
+  return input.replace(regex, (match) => `<span>${match}</span>`);
+}
