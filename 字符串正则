@@ -3,3 +3,38 @@ function wrapBetweenCharacters(input, targetChar) {
   const regex = new RegExp(`${escapedChar}(.*?)${escapedChar}`, 'g');
   return input.replace(regex, (match) => `<span>${match}</span>`);
 }
+
+function wrapBetweenCharacters(target, wrapper) {
+  // 判断 target 是否为正则或字符串
+  const targetRegex = target instanceof RegExp
+    ? target // 如果是正则，直接使用
+    : new RegExp(`${String(target).replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')}`, 'g'); // 如果是字符串，转义特殊字符
+
+  // 提取包裹内容中的开标签和闭标签
+  const wrapperStart = wrapper.match(/^<[^>]+>/)?.[0] || ""; // 匹配开标签
+  const wrapperEnd = wrapper.match(/<\/[^>]+>$/)?.[0] || ""; // 匹配闭标签
+
+  if (!wrapperStart || !wrapperEnd) {
+    throw new Error("Wrapper must include both opening and closing tags.");
+  }
+
+  // 构造匹配范围的正则
+  const regex = new RegExp(`(${targetRegex.source})(.*?)(${targetRegex.source})`, 'g');
+
+  // 返回替换函数
+  return (str) => str.replace(regex, (match, startChar, content, endChar) => {
+    return `${wrapperStart}${startChar}${content}${endChar}${wrapperEnd}`;
+  });
+}
+
+// 测试1：字符串作为目标字符，使用复杂包裹标签
+const wrapWithSpan = wrapBetweenCharacters("o", '<span class="h"></span>');
+const result1 = wrapWithSpan("w ossss ott odd");
+console.log(result1);
+// 输出: w <span class="h">ossss</span> ott <span class="h">odd</span>
+
+// 测试2：正则作为目标字符，使用复杂包裹标签
+const wrapWithCustomTag = wrapBetweenCharacters(/o/, '<strong class="highlight"></strong>');
+const result2 = wrapWithCustomTag("w ossss ott odd");
+console.log(result2);
+// 输出: w <strong class="highlight">ossss</strong> ott <strong class="highlight">odd</strong>
