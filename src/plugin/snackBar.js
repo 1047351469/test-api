@@ -31,7 +31,7 @@ function createSnackbarContainer() {
 
 // 方法：显示 Snackbar
 export function showSnackbar({ message, color = "info", timeout = 3000 }) {
-  debugger
+  
   createSnackbarContainer(); // 确保 Snackbar 容器已创建
   snackbarState.message = message;
   snackbarState.color = color;

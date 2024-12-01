@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import { ref, computed ,onMounted} from "vue"
-const selected = ref([])
+const selectedId = ref(null);
+
 const headers = ref([
+{ title: '选择', value: 'radio', sortable: false },
   { title: 'name', value: 'name', sortable: false },
   { title: 'location', value: 'location', sortable: false },
   { title: 'height', value: 'height', sortable: false },
   { title: 'base', value: 'base', sortable: false },
   { title: 'volume', value: 'volume', sortable: false },
 ])
+
 const items = ref([
   {
     name: '🍎 Apple',
@@ -15,6 +18,7 @@ const items = ref([
     height: '0.1',
     base: '0.07',
     volume: '0.0001',
+    radio:1,
   },
   {
     name: '🍌 Banana',
@@ -22,6 +26,7 @@ const items = ref([
     height: '0.2',
     base: '0.05',
     volume: '0.0002',
+    radio:2,
   },
   {
     name: '🍇 Grapes',
@@ -29,6 +34,7 @@ const items = ref([
     height: '0.02',
     base: '0.02',
     volume: '0.00001',
+    radio:3,
   }])
 
 const page = ref(1)
@@ -157,38 +163,36 @@ showSnackbar({
   timeout: 5000,
 });
 
-
+const changeId=(id)=>{
+  selectedId.value=id
+}
 
 </script>
 
 
 <template>
+{{ selectedId }} selectedId
   <div v-html="formattedHtml"></div>
   <div @click="copyToClipboard(items)">
     downloadjson</div>
   <div >download</div>
   
-
-  <v-data-table v-model="selected" :headers="headers" :items="items" show-select v-model:page="page"
-    :items-per-page="itemsPerPage" select-strategy="single" return-object class="elevation-1" hover
+ 
+  <v-data-table  :headers="headers" :items="items"  v-model:page="page"
+    :items-per-page="itemsPerPage"   class="elevation-1" hover
     :row-props="row_classes">
-    <template v-slot:item.data-table-select="{ internalItem, isSelected, toggleSelect }">
-
-      <v-radio color="red-darken-3" :model-value="isSelected(internalItem)"
-        @update:model-value="toggleSelect(internalItem)"></v-radio>
-      <!-- <v-checkbox-btn
-        :model-value="isSelected(internalItem)"
-        color="primary"
-        @update:model-value="toggleSelect(internalItem)"
-      ></v-checkbox-btn> -->
+    
+    <!-- 单选列 -->
+    <template v-slot:item.radio="{ item }">
+      <v-radio  :value="item.radio"   />
     </template>
-
     <template v-slot:bottom>
       <div class="title-center pt-2">
         <v-pagination v-model="page" :length="pageCount" next-icon="" prev-icon="" rounded="circle"></v-pagination>
       </div>
     </template>
   </v-data-table>
+
 
 </template>
 

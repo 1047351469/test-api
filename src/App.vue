@@ -1,7 +1,3 @@
-<script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-</script>
 
 <template>
   <!-- <div class="parent">
@@ -18,11 +14,16 @@ import HelloWorld from './components/HelloWorld.vue'
         <RouterLink to="/about">About</RouterLink>
       </nav>
     </div>
-  </header> -->
-
+  </header -->
+  
   <RouterView />
 </template>
 
+<script setup>
+import { RouterLink, RouterView } from 'vue-router'
+
+ 
+</script>
 <style scoped>
 
 .parent {

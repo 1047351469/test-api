@@ -9,6 +9,9 @@ import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import '@mdi/font/css/materialdesignicons.css'
 
+// 使用全局变量 window.VueToastification
+const Toast = window['VueToastification'];
+console.error(window);
 
 const vuetify = createVuetify({
   components,
@@ -34,7 +37,6 @@ app.use(router)
 app.use(MathFormatterPlugin);
 app.use(vuetify)
 app.mount('#app')
-
 
 //防抖函数
 
