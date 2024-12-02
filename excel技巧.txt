@@ -24,3 +24,4 @@ with newlines.`;
 const result = replaceInnerNewlines(input);
 
 console.log(result);
+([^\n])\n
