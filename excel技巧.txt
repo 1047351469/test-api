@@ -7,3 +7,4 @@ alt+enter换行
 日期 TODAY	
 NOW	=DATE(2023, 12, 1)=TIME(12, 30, 45) YEAR(A1) =MONTH(A1) DAY(A1) DATEDIF比较差异
 查询 index v,hlookup 表sheet工作簿
+^(?!opt\d{3}$).+$
