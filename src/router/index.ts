@@ -24,6 +24,18 @@ const router = createRouter({
       name: 'xTable',
       component: () => import('../views/xPage.vue'),
     },
+    {
+      path: '/list',
+      name: 'ListPage',
+      component: () => import('../views/ListPage.vue'),
+      meta: { keepAlive: true }, // 缓存列表页
+    },
+    {
+      path: '/detail/:id',
+      name: 'DetailPage',
+      component: () => import('../views/DetailPage.vue'),
+      meta: { keepAlive: false }, // 不缓存详情页
+    },
   ],
 })
 

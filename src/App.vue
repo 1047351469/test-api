@@ -17,6 +17,14 @@
   </header -->
   
   <RouterView />
+  <router-view v-slot="{ Component }">
+      <!-- 缓存标记为 keepAlive 的路由组件 -->
+      <keep-alive>
+        <component v-if="$route.meta.keepAlive" :is="Component" />
+      </keep-alive>
+      <!-- 不缓存的路由组件 -->
+      <component v-if="!$route.meta.keepAlive" :is="Component" />
+    </router-view>
 </template>
 
 <script setup>

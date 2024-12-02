@@ -1,0 +1,62 @@
+=SUBSTITUTE(A1, CHAR(10), " ") 替换空行
+=TEXTJOIN(",", FALSE, A6:E6) 连接
+=IF(ISNUMBER(SEARCH(" ", D1)), "有空格", "无空格")
+ISBLANK 空单元格
+=IFERROR(MID(D1, FIND("TOP", D1), 6), "") 6为长度
+
+function moveAfterByValue(arr, fromValue, toValue) {
+  const fromIndex = arr.findIndex(item => item === fromValue);
+  const toIndex = arr.findIndex(item => item === toValue);
+
+  if (fromIndex === -1 || toIndex === -1) {
+    throw new Error('Invalid values provided.');
+  }
+
+  const [item] = arr.splice(fromIndex, 1);
+  arr.splice(toIndex + 1, 0, item);
+
+  return arr;
+}
+
+// 示例
+const arr = [1, 2, 3, 4, 5];
+console.log(moveAfterByValue(arr, 1, 3)); // [2, 3, 1, 4, 5]
+// 1 被移动到 3 的后面
+
+// utils/localStorage.js
+import { ref, watch } from 'vue';
+
+/**
+ * 初始化 token：
+ * 从 localStorage 获取 'token'，如果不存在则初始化为空对象。
+ * JSON.parse 用于将字符串解析为对象，如果 localStorage 值格式不正确，则使用 try-catch 处理异常。
+ */
+let initialToken = {};
+try {
+  initialToken = JSON.parse(localStorage.getItem('token') || '{}');
+} catch (e) {
+  console.error('Error parsing token from localStorage:', e);
+  initialToken = {}; // 如果解析失败，初始化为空对象
+}
+
+// 创建一个响应式 token，用于全局管理和实时同步
+export const token = ref(initialToken);
+
+/**
+ * 监听 token 的变化：
+ * 每当 token 更新时，自动同步到 localStorage。
+ * - 如果 token 是有效对象（非空），使用 JSON.stringify 序列化并存储到 localStorage。
+ * - 如果 token 是空对象，直接从 localStorage 删除。
+ */
+watch(token, (newVal) => {
+  try {
+    if (newVal && Object.keys(newVal).length > 0) {
+      localStorage.setItem('token', JSON.stringify(newVal));
+    } else {
+      localStorage.removeItem('token');
+    }
+  } catch (e) {
+    console.error('Error updating token in localStorage:', e);
+  }
+});
+
