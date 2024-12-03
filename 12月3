@@ -10,3 +10,40 @@ function sortByOrderArray(dataArray, dataKey, orderArray, orderKey) {
 const sortedData = sortByOrderArray(data, 'id', order, 'orderId');
 
 console.log(sortedData);
+
+const data = [
+  { key: 'name', value: 'Alice' },
+  { key: 'age', value: 25 },
+  { key: 'email', value: 'alice@example.com' },
+  { key: 'username', value: 'a123' },
+  { key: 'nickname', value: 'Ali' }
+];
+
+// 定义处理函数
+const sharedHandler = (value) => `Processed: ${value}`;
+
+// 定义共享键的列表
+const sharedKeys = ['name', 'username', 'nickname'];
+
+// 定义处理函数映射
+const handlers = {
+  ...Object.fromEntries(sharedKeys.map(key => [key, sharedHandler])), // 共享逻辑
+  age: (value) => value + 10,  // 特殊逻辑
+  email: (value) => value.replace('@', '[at]') // 特殊逻辑
+};
+
+function processArray(dataArray, handlers) {
+  return dataArray.map(item => {
+    const { key, value } = item;
+
+    // 如果有对应处理函数，调用它；否则返回原值
+    const processedValue = handlers[key] ? handlers[key](value) : value;
+
+    return { key, value: processedValue };
+  });
+}
+
+// 调用处理函数
+const result = processArray(data, handlers);
+
+console.log(result);
