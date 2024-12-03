@@ -1,0 +1,12 @@
+function sortByOrderArray(dataArray, dataKey, orderArray, orderKey) {
+  return dataArray.sort((a, b) => {
+    const orderA = orderArray.findIndex(orderItem => orderItem[orderKey] === a[dataKey]);
+    const orderB = orderArray.findIndex(orderItem => orderItem[orderKey] === b[dataKey]);
+    return orderA - orderB;
+  });
+}
+
+// 调用示例
+const sortedData = sortByOrderArray(data, 'id', order, 'orderId');
+
+console.log(sortedData);
