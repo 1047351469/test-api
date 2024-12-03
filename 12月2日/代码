@@ -1,0 +1,37 @@
+<script setup>
+import { ref, onMounted, onUnmounted } from 'vue';
+
+// 创建响应式变量
+const myValue = ref(localStorage.getItem('myKey') || '');
+
+// 监听 localStorage 变化
+const syncLocalStorage = () => {
+    window.addEventListener('storage', (event) => {
+        if (event.key === 'myKey') {
+            myValue.value = event.newValue || ''; // 同步到响应式变量
+        }
+    });
+};
+
+// 初始化和清理事件监听器
+onMounted(() => {
+    syncLocalStorage();
+});
+
+onUnmounted(() => {
+    window.removeEventListener('storage', syncLocalStorage);
+});
+
+// 更新 localStorage 的值（可以触发同步）
+const updateLocalStorage = (newVal) => {
+    localStorage.setItem('myKey', newVal);
+    myValue.value = newVal; // 同步响应式变量（避免自己无法触发 storage 事件）
+};
+</script>
+
+<template>
+  <div>
+    <p>当前值：{{ myValue }}</p>
+    <button @click="updateLocalStorage('New Value')">更新 localStorage</button>
+  </div>
+</template>
