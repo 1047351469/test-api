@@ -1,4 +1,4 @@
-function sortByOrderArray(dataArray, dataKey, orderArray, orderKey) {
+3function sortByOrderArray(dataArray, dataKey, orderArray, orderKey) {
   return dataArray.sort((a, b) => {
     const orderA = orderArray.findIndex(orderItem => orderItem[orderKey] === a[dataKey]);
     const orderB = orderArray.findIndex(orderItem => orderItem[orderKey] === b[dataKey]);
@@ -80,3 +80,16 @@ onUnmounted(() => {
   background: linear-gradient(to bottom, #f0f0f0, #d0d0d0);
 }
 </style>
+
+// router/index.js
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition; // 恢复之前的位置
+    } else {
+      return { left: 0, top: 0 }; // 初始化滚动
+    }
+  }
+});
