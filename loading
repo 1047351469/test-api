@@ -1,0 +1,96 @@
+<!-- App.vue -->
+<template>
+  <div>
+    <loading-overlay v-if="isLoading" />
+    <router-view />
+  </div>
+</template>
+
+<script setup>
+import { ref, provide } from 'vue';
+import LoadingOverlay from './components/LoadingOverlay.vue'; // Loading 组件
+
+// 定义全局的 loading 状态
+const isLoading = ref(false);
+
+// 提供控制显示/隐藏的方法
+const showLoading = () => {
+  isLoading.value = true;
+};
+
+const hideLoading = () => {
+  isLoading.value = false;
+};
+
+// 使用 provide 提供这些方法
+provide('showLoading', showLoading);
+provide('hideLoading', hideLoading);
+</script>
+
+<!-- components/LoadingOverlay.vue -->
+<template>
+  <div class="loading-overlay">
+    <div class="spinner"></div>
+    <p>Loading...</p>
+  </div>
+</template>
+
+<script setup>
+</script>
+
+<style>
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #ccc;
+  border-top-color: #000;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+</style>
+
+<!-- ExamplePage.vue -->
+<template>
+  <div>
+    <h1>Example Page</h1>
+    <button @click="handleButtonClick">Show Loading</button>
+  </div>
+</template>
+
+<script setup>
+import { inject } from 'vue';
+
+// 获取全局提供的控制方法
+const showLoading = inject('showLoading');
+const hideLoading = inject('hideLoading');
+
+// 模拟按钮点击触发 loading
+const handleButtonClick = () => {
+  showLoading(); // 显示 loading
+  setTimeout(() => {
+    hideLoading(); // 3 秒后隐藏 loading
+  }, 3000);
+};
+</script>
