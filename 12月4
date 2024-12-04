@@ -1,0 +1,17 @@
+import { onMounted, onUnmounted } from "vue";
+useKeyShortcut
+export function useKeyShortcut(callback) {
+  const handleKeyDown = (event) => {
+    if (event.ctrlKey && event.shiftKey && event.key === "*") {
+      callback();
+    }
+  };
+
+  onMounted(() => {
+    window.addEventListener("keydown", handleKeyDown);
+  });
+
+  onUnmounted(() => {
+    window.removeEventListener("keydown", handleKeyDown);
+  });
+}
