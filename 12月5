@@ -1,0 +1,33 @@
+// useLifecycleTimes.js
+import { onBeforeMount, onMounted, onUpdated, onUnmounted } from "vue";
+
+export function useLifecycleTimes() {
+  let startBeforeMount = 0;
+  let startMounted = 0;
+  let startUpdated = 0;
+  let startUnmounted = 0;
+
+  onBeforeMount(() => {
+    startBeforeMount = performance.now();
+    console.log("beforeMount 開始時間:", startBeforeMount);
+  });
+
+  onMounted(() => {
+    startMounted = performance.now();
+    console.log("mounted 終了時間:", startMounted);
+    console.log("beforeMount から mounted までの時間差:", startMounted - startBeforeMount, "ms");
+  });
+
+  onUpdated(() => {
+    const updatedTime = performance.now();
+    console.log("updated 時間:", updatedTime);
+    console.log("前回 updated から今回 updated までの時間差:", updatedTime - startUpdated, "ms");
+    startUpdated = updatedTime;
+  });
+
+  onUnmounted(() => {
+    startUnmounted = performance.now();
+    console.log("unmounted 時間:", startUnmounted);
+    console.log("最後のライフサイクルから unmounted までの時間差:", startUnmounted - startUpdated, "ms");
+  });
+}
