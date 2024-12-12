@@ -1,0 +1,8 @@
+@echo off
+set /a seconds=0
+:loop
+cls
+echo 正计时: %seconds% 秒
+set /a seconds+=1
+timeout /t 1 >nul
+goto loop
