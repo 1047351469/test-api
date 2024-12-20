@@ -1,0 +1,90 @@
+<template>
+  <v-row>
+    <!-- 西历 -->
+    <v-col cols="4">
+      <v-select
+        v-model="selectedYear"
+        :items="years"
+        label="西历"
+        @change="updateDate"
+      ></v-select>
+    </v-col>
+
+    <!-- 月 -->
+    <v-col cols="4">
+      <v-select
+        v-model="selectedMonth"
+        :items="months"
+        label="月"
+        @change="updateDate"
+      ></v-select>
+    </v-col>
+
+    <!-- 日 -->
+    <v-col cols="4">
+      <v-select
+        v-model="selectedDay"
+        :items="days"
+        label="日"
+        @change="updateDate"
+      ></v-select>
+    </v-col>
+  </v-row>
+</template>
+
+<script>
+import { ref, computed, watch, defineComponent } from 'vue';
+import dayjs from 'dayjs';
+
+export default defineComponent({
+  name: 'YearMonthDayPicker',
+  emits: ['change'],
+  setup(_, { emit }) {
+    // 年、月、日数据
+    const selectedYear = ref(new Date().getFullYear());
+    const selectedMonth = ref(new Date().getMonth() + 1);
+    const selectedDay = ref(new Date().getDate());
+
+    // 年份选项
+    const years = ref(Array.from({ length: 50 }, (_, i) => 1970 + i)); // 1970-2020
+    // 月份选项
+    const months = ref(Array.from({ length: 12 }, (_, i) => i + 1)); // 1-12
+    // 动态计算日期
+    const days = computed(() => {
+      const daysInMonth = dayjs(`${selectedYear.value}-${selectedMonth.value}-01`).daysInMonth();
+      return Array.from({ length: daysInMonth }, (_, i) => i + 1);
+    });
+
+    // 更新日期变化
+    const updateDate = () => {
+      emit('change', {
+        year: selectedYear.value,
+        month: selectedMonth.value,
+        day: selectedDay.value,
+      });
+    };
+
+    // 监听年份或月份变化自动更新日期
+    watch([selectedYear, selectedMonth], () => {
+      if (selectedDay.value > days.value.length) {
+        selectedDay.value = days.value.length;
+      }
+      updateDate();
+    });
+
+    return {
+      selectedYear,
+      selectedMonth,
+      selectedDay,
+      years,
+      months,
+      days,
+      updateDate,
+    };
+  },
+});
+</script>
+
+<style scoped>
+/* 根据需要自定义样式 */
+</style>
