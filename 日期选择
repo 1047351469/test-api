@@ -1,0 +1,18 @@
+<template>
+  <v-container>
+    <year-month-day-picker @change="onDateChange" />
+  </v-container>
+</template>
+
+<script>
+import YearMonthDayPicker from './YearMonthDayPicker.vue';
+
+export default {
+  components: { YearMonthDayPicker },
+  methods: {
+    onDateChange(date) {
+      console.log('Selected Date:', date);
+    },
+  },
+};
+</script>
