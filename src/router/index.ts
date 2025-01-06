@@ -36,6 +36,12 @@ const router = createRouter({
       component: () => import('../views/DetailPage.vue'),
       meta: { keepAlive: false }, // 不缓存详情页
     },
+    {
+      path: '/ts',
+      name: 'tsPage',
+      component: () => import('../views/tsView.vue'),
+      meta: { keepAlive: false }, // 不缓存详情页
+    },
   ],
 })
 

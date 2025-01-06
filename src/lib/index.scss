@@ -1,0 +1,5 @@
+$myColor: red;
+.div{
+    $myColor:green !global;
+    color:$myColor
+}

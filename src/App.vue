@@ -15,8 +15,8 @@
       </nav>
     </div>
   </header -->
-  <scroll-view></scroll-view>
-  <RouterView />
+  <!-- <scroll-view></scroll-view>
+  <RouterView /> -->
   
   <router-view v-slot="{ Component }">
       <!-- 缓存标记为 keepAlive 的路由组件 -->

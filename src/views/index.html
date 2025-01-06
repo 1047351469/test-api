@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="box1">Box 1</div>
+<div class="box2">Box 2</div>
+<div class="container">
+    <img src="https://gips3.baidu.com/it/u=3732737575,1337431568&fm=3028&app=3028&f=JPEG&fmt=auto&q=100&size=f1440_2560" class="float-img">
+    <p>Some text content that should not wrap around the floating image.</p>
+  </div>
+
+</body>
+<style>
+    .float-img {
+  float: left;
+  width: 100px;
+  height: 100px;
+  margin-right: 10px;
+}
+
+.container {
+  overflow: hidden; 
+}
+    .box1 {
+margin-bottom: 40px;
+background: lightblue;
+}
+
+.box2 {
+margin-top: 40px;
+background: lightcoral;
+overflow: hidden; 
+}
+</style>
+</html>

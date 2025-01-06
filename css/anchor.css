@@ -1,0 +1,98 @@
+a:link {color:white;} 
+a:visited {color:pink;} 
+a:hover {color:blue;} 
+a:active {color:#0000FF;} 
+p::first-letter{
+    color: green;
+    font-size: 30px;
+}
+p::first-line{
+    color: yellow;
+}
+.css3:hover{
+    /* transform: rotate(30deg); */
+    /* transform: translate(240px,60px); */
+    /* transform: scale(2);
+    transform: skew(20deg,30deg); */
+}
+@keyframes myFirst {
+    0%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
+}
+.flex-container{
+    width: 500px;
+    border: 1px solid green;
+    display: flex;
+    /* justify-content: center;
+    align-items: center; */
+    height: 200px;
+    flex-wrap: wrap;
+    /* align-content: center; */
+    /* justify-content: space-between;
+    flex-direction: column; */
+}
+.flex-item{
+  /* flex: 1; */
+  width: 100px;
+}
+.order{
+    order: -1;
+    align-self: center;
+    color: red;
+    visibility: hidden;
+    /* display: none; */
+}
+button{
+    all:unset;
+    display: inline;
+    width: 200px;
+    height: 100px;
+    padding: 10px;
+    background-color: green;
+}
+.test{
+    /* display: inline; */
+    width: 400px;
+    height: 100px;
+    padding: 10px;
+    background-color: green;
+    position: sticky;
+    top:0;
+}
+.test1{
+    position: relative;
+}
+.test2{
+    position: absolute;
+    left: 10px;
+    top: 23px;
+    background-color: pink;
+}
+.test3{
+    background-color: yellow;
+    position: absolute;
+    z-index: 1;
+}
+.love {
+    /* position: relative; */
+    font-size: 30px;
+    color: red;
+}
+
+/* 在“爱”字前插入“我” */
+.love::before {
+    content: "我";
+    color: blue;
+    /* margin-right: 5px; */
+}
+
+
+.love::after {
+    content: "你";
+    color: green;
+    /* margin-left: 5px; */
+}

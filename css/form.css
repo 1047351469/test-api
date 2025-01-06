@@ -1,0 +1,15 @@
+input[type="text"] {
+    display: inline-block;
+    border-radius: 4px;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 12px 20px;
+    border: 1px solid #ccc;
+    margin: 8px 0;
+}
+input[type=text]:focus {
+    background-color: lightblue;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* 自定义阴影 */
+    border: 2px solid #4CAF50; /* 自定义边框颜色 */
+  }
