@@ -1,6 +1,13 @@
 
 <template>
   <div>
+    <v-textarea
+     label="Write a comment.."
+     append-icon="mdi-send"
+    >
+ </v-textarea>  
+    <v-icon icon="mdi-home" />
+    <v-icon>mdi-magnify</v-icon>
     <div class="div">11</div>
     <div class="test">test</div>
     <ul>
