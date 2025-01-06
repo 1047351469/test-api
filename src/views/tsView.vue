@@ -16,14 +16,58 @@
    <son ref="mySon" name="name" @test="(str)=>console.error('hello'+str)"></son>
    <son ></son>
    <todo-delete-button></todo-delete-button>
+   <v-container>
+    <v-form ref="formRef" v-model="isFormValid">
+      <!-- 输入框 -->
+      <v-text-field
+        label="Name"
+        v-model="formData.name"
+        :rules="shouldValidate ? nameRules : []"
+        ref="nameField"
+      ></v-text-field>
+
+      <!-- 提交按钮 -->
+      <v-btn @click="handleSubmit">Submit</v-btn>
+    </v-form>
+
+    <p>Validation Result: {{ validationMessage }}</p>
+  </v-container>
   </div>
 </template>
 
 <script setup lang="ts">
-import {onMounted,ref,provide } from 'vue'
+import {onMounted,ref,provide,nextTick } from 'vue'
 import {useCount} from "./hooks/useCounter"
 const {count,increment,sum} = useCount(2,3)
 const {count:count1,increment:increment1} = useCount(1,5)
+
+// 表单数据
+const formData = ref({
+  name: "",
+});
+const nameField = ref(null);
+// 是否启用校验
+const shouldValidate = ref(false);
+
+// 校验规则
+const nameRules = [
+  (v) => !!v || "Name is required",
+  (v) => v.length >= 3 || "Name must be at least 3 characters",
+];
+
+// 表单整体状态
+const isFormValid = ref(false);
+
+// 校验结果信息
+const validationMessage = ref("");
+
+// 提交按钮处理
+const handleSubmit =async () => {
+  shouldValidate.value = true; // 启用校验
+  await nextTick()
+   nameField.value.validate()
+   nameField.value.resetValidation();
+};
 const text="<h1>test</h1>"
 import "./hooks/testTs"
 import Son from "./Son.vue"

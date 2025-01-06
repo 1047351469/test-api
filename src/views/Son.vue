@@ -5,13 +5,71 @@
     <div class="son">
         son
     </div>
+    <v-container>
+    <v-form ref="formRef" v-model="valid">
+      <!-- Name 输入框 -->
+      <v-text-field
+        label="Name"
+        v-model="formData.name"
+        :rules="nameRules"
+        ref="nameField"
+      ></v-text-field>
+
+      <!-- Email 输入框 -->
+      <v-text-field
+        label="Email"
+        v-model="formData.email"
+        :rules="emailRules"
+      ></v-text-field>
+
+      <!-- 按钮触发 Name 校验 -->
+      <v-btn @click="validateName">Validate Name</v-btn>
+    </v-form>
+  </v-container>
   </div>
 </template>
 
 <script setup lang="ts">
 import axios from 'axios'
 
-import {onMounted,inject } from 'vue'
+import {onMounted,inject,ref } from 'vue'
+
+
+
+// 表单数据
+const formData = ref({
+  name: "",
+  email: ""
+});
+
+// 表单校验状态
+const valid = ref(false);
+
+// Name 校验规则
+const nameRules = [
+  v => !!v || "Name is required",
+  v => v.length >= 3 || "Name must be at least 3 characters"
+];
+
+// Email 校验规则
+const emailRules = [
+  v => !!v || "Email is required",
+  v => /.+@.+\..+/.test(v) || "Email must be valid"
+];
+
+// 获取表单引用
+const formRef = ref(null);
+
+// Name 字段的引用
+const nameField = ref(null);
+
+// 校验 Name 字段
+const validateName = () => {
+  if (nameField.value) {
+    const isValid = nameField.value.validate(); // 校验 Name 字段
+    console.log(`Name is ${isValid ? "valid" : "invalid"}`);
+  }
+};
 type Props={
   name?:string
 }
@@ -48,11 +106,11 @@ onMounted(()=>{
 </script>
 <style lang="scss" scoped>
   .father{
-    width: 40px;
-    height: 40px;
-    border: 1px solid green;
-    padding: 10px;
-    color:yellow;
+    // width: 40px;
+    // height: 40px;
+    // border: 1px solid green;
+    // padding: 10px;
+    // color:yellow;
     .son{
       color:aqua;
     }
