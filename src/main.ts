@@ -1,9 +1,9 @@
-import './assets/main.css'
-
+// import './assets/main.css'
+import './assets/fonts/iconfont.css'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 // Vuetify
-import 'vuetify/styles'
+// import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
@@ -24,15 +24,18 @@ const vuetify = createVuetify({
 import MathFormatterPlugin from '@/plugin/mathFormatterPlugin.js';
 import App from './App.vue'
 import router from './router'
-import "@/lib/index.scss"
+// import "@/lib/index.scss"
 // import "@/utils/dayjs/test.js"
 // import  "@/utils/searchObj/test.js"
 // import "@/utils//logSetting/test.js"
 // import "@/utils/excel/test.js"
 // import "@/utils/lodash.js"
 // import "@/promise/index.js"
+import registerGlobalComponents from '@/plugins/global-components.js';
 const app = createApp(App)
 app.component('TodoDeleteButton', TodoDeleteButton)
+// 调用全局注册函数
+registerGlobalComponents(app);
 app.use(createPinia())
 app.use(router)
 app.use(MathFormatterPlugin);

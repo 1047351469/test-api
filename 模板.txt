@@ -1,0 +1,32 @@
+<template>
+  
+</template>
+
+<style lang="scss">
+
+</style>
+<script setup>
+defineOptions({
+  name: 'MyComponent',
+});
+const emit = defineEmits(['customEvent']); // 声明事件名称
+
+function handleClick() {
+  emit('customEvent', 'Hello from child'); // 触发事件并传递数据
+}
+const props = defineProps({
+  title: {
+    type: String,
+    required: true, // 必需
+  },
+  count: {
+    type: Number,
+    default: 0, // 默认值
+  },
+  tags: {
+    type: Array,
+    default: () => ['vue', 'javascript'], // 默认值为数组
+    validator: (value) => value.every(tag => typeof tag === 'string'), // 自定义验证
+  },
+});
+</script>

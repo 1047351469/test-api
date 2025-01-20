@@ -1,7 +1,17 @@
 <script setup lang="ts">
 import { ref, computed ,onMounted} from "vue"
 const selectedId = ref(null);
-
+const gender=ref("0")
+const checkFlag=ref(false)
+const arr=ref(["1","2"])
+const group=ref("1")
+const flag=ref(true)
+const  visible=ref(false)
+const username=ref("")
+const close=()=>{
+  console.error(11)
+  visible.value=false
+}
 const headers = ref([
 { title: '选择', value: 'radio', sortable: false },
   { title: 'name', value: 'name', sortable: false },
@@ -171,6 +181,44 @@ const changeId=(id)=>{
 
 
 <template>
+  <one-checkbox-group v-model="arr">
+    <one-checkbox label="0">0-</one-checkbox>
+    <one-checkbox label="1">1-</one-checkbox>
+    <one-checkbox label="2">2-</one-checkbox>
+    <one-checkbox label="3">3-</one-checkbox>
+  </one-checkbox-group>
+  <one-checkbox label="test" v-model="checkFlag"></one-checkbox>
+
+  <one-radio-group v-model="group">
+    <one-radio  label="0">男</one-radio>
+    <one-radio label="1">女</one-radio>
+  </one-radio-group>
+
+   <one-radio v-model="gender" label="0">男</one-radio>
+  <one-radio v-model="gender" label="1">女</one-radio>
+  
+  <one-switch v-model="flag" name="flag"   active-color="red"
+     inactive-color="pink"
+></one-switch>
+  <one-input name="username" type="password" placeholder="请输入"   clearable  v-model="username"></one-input>
+    <i class="one-icon-camera" @click="visible=true"></i>
+  <one-button type="primary" plain  circle @click="close">11</one-button>
+  <one-button type="warning" plain round>11</one-button>
+  <one-button icon="camera" ></one-button>
+  <one-dialog width="90%" top="200px" v-model:visible="visible">
+    <template v-slot:title>
+       <h1  style="color:red">title</h1>
+    </template>
+    <ul>
+      <li>11</li>
+      <li>22</li>
+      <li>33</li>
+    </ul>
+    <template v-slot:footer>
+          <one-button @click="close">取消</one-button>
+          <one-button type="primary">确定</one-button>
+        </template>
+  </one-dialog>
 {{ selectedId }} selectedId
   <div v-html="formattedHtml"></div>
   <div @click="copyToClipboard(items)">
@@ -198,7 +246,7 @@ const changeId=(id)=>{
 
 
 <style>
-.wenzi {
+/* .wenzi {
   width: 100px;
   border: 1px solid black;
   overflow: hidden;
@@ -207,5 +255,5 @@ const changeId=(id)=>{
 .orange {
   color: orange;
   background-color: pink;
-}
+} */
 </style>
