@@ -181,6 +181,8 @@ const changeId=(id)=>{
 
 
 <template>
+  <h1>h1</h1>
+  <css-select></css-select>  
   <one-checkbox-group v-model="arr">
     <one-checkbox label="0">0-</one-checkbox>
     <one-checkbox label="1">1-</one-checkbox>
@@ -245,7 +247,10 @@ const changeId=(id)=>{
 </template>
 
 
-<style>
+<style lang="scss">
+h1{
+  color: $secondary-color;
+}
 /* .wenzi {
   width: 100px;
   border: 1px solid black;

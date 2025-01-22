@@ -1,10 +1,17 @@
+  <slot name="footer" v-if="$slots.footer"></slot>
+   <template v-slot:footer>
+  </template>
+   ::v-deep .one-button:first-child{
+        margin-right: 20px;
+      }
 <template>
   
 </template>
 
 <style lang="scss">
-
 </style>
+<script setup>
+</script>
 <script setup>
 defineOptions({
   name: 'MyComponent',

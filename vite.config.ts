@@ -10,6 +10,15 @@ export default defineConfig({
     vue(),
     vueDevTools(),
   ],
+  css: {
+    preprocessorOptions: {
+        scss: {
+          // 自定义
+          additionalData: `@use "@/styles/variables.scss" as *;`
+        }
+
+    }
+  },
   base: './',
   resolve: {
     alias: {
