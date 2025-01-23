@@ -1,0 +1,1 @@
+const array = ((start, end) => Array.from({ length: end - start + 1 }, (_, i) => ({ label: `${i + start}`, value: i + start })))(2, 23);
