@@ -3,7 +3,8 @@ import './assets/fonts/iconfont.css'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 // Vuetify
-// import 'vuetify/styles'
+import 'vuetify/styles'
+import "./settings.scss"
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
@@ -20,7 +21,7 @@ const vuetify = createVuetify({
     defaultSet: 'mdi'
   },
 })
-  
+
 import MathFormatterPlugin from '@/plugin/mathFormatterPlugin.js';
 import App from './App.vue'
 import router from './router'

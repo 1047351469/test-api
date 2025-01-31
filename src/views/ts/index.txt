@@ -1,0 +1,58 @@
+let str: string ="name"
+let n:(number|string)[] = [1,"1"]
+type strAndNumber=(number|string)[]
+let s:strAndNumber = [1,"2"]
+console.log(str)
+const add=(a:number,b:number,c?:number):number=>{
+    console.log(c)
+  return a+b
+}
+add(1,1,2)
+interface Person{
+    name:string,
+    age:number,
+    sex?:boolean,
+}
+let p:Person = {
+    name:"jack",
+    age:18
+}
+interface Man extends Person {
+   work:string,
+}
+type GoodType={
+    name:string,
+    pice:number,
+}
+type DisGood=GoodType & {
+    discount:number,
+}
+let disGood:DisGood = {
+    name:"apple",
+    pice:5,
+    discount:0.5,
+}
+type data={
+    title:string,
+    content:string,
+}
+type res={
+    code:number,
+    msg:string,
+    data:data,
+}
+let res1:res={
+    code:200,
+    msg:"success",
+    data:{
+        title:"test",
+        content:"this is a test"
+    },
+}
+type Gender="male" | "female"
+let gender:Gender = "male"
+let m=1
+let t:any=false
+t=1
+let link=document.getElementById("link") as HTMLAnchorElement
+console.error(link)

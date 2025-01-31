@@ -13,7 +13,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
         scss: {
-          // 自定义
+          // 自定义 
           additionalData: `@use "@/styles/variables.scss" as *;`
         }
 
