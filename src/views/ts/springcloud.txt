@@ -1,0 +1,6 @@
+调用服务 超时 异常 轮询 限流
+注册服务 调用 
+网关
+配置中心
+spring ioc 容器存取 aop植入逻辑
+springboot自动配置 starter-web,auto-configuration会自动找配置的class，里面如果有dispather-servelet里import

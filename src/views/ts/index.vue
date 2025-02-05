@@ -1,6 +1,8 @@
 <!--  -->
 <template>
   <div>
+    <p-input></p-input>
+    <func></func>
     <hook></hook>
      <p-use-btn></p-use-btn>
      <p-use-input></p-use-input>
@@ -9,12 +11,14 @@
     <a ref="link" href="https://www.baiducom" id="link">百度</a>
     <sone :age="age" ref="son"  @printMsg="printMsg"></sone>
     <life></life>
-     
+    
   </div>
 </template>
 
 <script setup>
+import PInput from "./form/pInput.vue"
 import { reactive,toRefs,onMounted,ref,provide} from 'vue'
+import func from "./func.vue"
 import Sone from "./Sone.vue"
 import Life from "./Life.vue"
 import PUseBtn from './PUseBtn.vue'

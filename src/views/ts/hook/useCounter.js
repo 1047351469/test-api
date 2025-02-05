@@ -29,5 +29,15 @@ export function useFetch() {
     };
     return { data, error, loading,fetchData };
 }
+export function useOnce(fn) {
+  const done = ref(false);
+
+  return (...args) => {
+    if (!done.value) {
+      done.value = true;
+      return fn(...args);
+    }
+  };
+}
 
 
