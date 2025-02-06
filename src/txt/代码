@@ -1,0 +1,16 @@
+<script setup>
+import { onMounted, onUnmounted } from "vue";
+
+const disableForwardNavigation = () => {
+  history.pushState(null, "", document.URL);
+  history.pushState(null, "", document.URL); // 两次 push，前进无效
+};
+
+onMounted(() => {
+  window.addEventListener("popstate", disableForwardNavigation);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("popstate", disableForwardNavigation);
+});
+</script>
