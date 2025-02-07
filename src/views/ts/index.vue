@@ -24,6 +24,7 @@ import Life from "./Life.vue"
 import PUseBtn from './PUseBtn.vue'
 import PUseInput from './PUseInput.vue'
 import hook from './hook.vue'
+import "./form/test.js"
 // import "./index.ts"
 let count=ref(1)
 const changeCount=()=>{
