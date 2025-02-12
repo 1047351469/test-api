@@ -4,3 +4,45 @@ input[type=text]:focus {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* 自定义阴影 */
     border: 2px solid #4CAF50; /* 自定义边框颜色 */
   }
+<template>
+  <div>
+    <select
+      ref="select"
+      @focus="handleFocus"
+      @blur="handleBlur"
+      @mousedown="handleMouseDown"
+    >
+      <option value="">请选择</option>
+      <option value="1">选项 1</option>
+      <option value="2">选项 2</option>
+    </select>
+    <p v-if="blurred">你离开了输入框</p>
+  </div>
+</template>
+
+<script setup>
+import { ref } from "vue";
+
+const blurred = ref(false);
+const isDropdownOpen = ref(false);
+const select = ref(null);
+
+// 监听 `mousedown` 事件，判断是否点击的是 `<select>` 选项
+const handleMouseDown = () => {
+  isDropdownOpen.value = true;
+};
+
+// `focus` 事件触发时，重置 `blurred` 状态
+const handleFocus = () => {
+  blurred.value = false;
+  isDropdownOpen.value = false;
+};
+
+// 只有当下拉框没有展开时，才触发 `blur`
+const handleBlur = () => {
+  if (!isDropdownOpen.value) {
+    blurred.value = true;
+  }
+  isDropdownOpen.value = false;
+};
+</script>
