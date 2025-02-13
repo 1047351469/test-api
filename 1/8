@@ -247,3 +247,16 @@ form.validate() 运行所有 rules，检查是否符合规则。
 ✅ 和 rules 默认校验方式一致，错误信息显示在 v-select 下方
 ✅ **提交时才校验
 
+
+import dayjs from "dayjs";
+
+const formatDate = (year, month, day) => {
+  return dayjs(`${year}-${month}-${day}`).format("YYYY-MM-DD");
+};
+
+// 示例
+const year = 2024;
+const month = 2;
+const day = 8;
+
+console.log(formatDate(year, month, day)); // 输出: "2024-02-08"
