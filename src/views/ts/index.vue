@@ -1,6 +1,8 @@
 <!--  -->
 <template>
   <div>
+    <user-form></user-form>
+    <user-table :headers="headers" :items="items"></user-table>
     <p-input></p-input>
     <func></func>
     <hook></hook>
@@ -15,7 +17,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import PInput from "./form/pInput.vue"
 import { reactive,toRefs,onMounted,ref,provide} from 'vue'
 import func from "./func.vue"
@@ -25,7 +27,27 @@ import PUseBtn from './PUseBtn.vue'
 import PUseInput from './PUseInput.vue'
 import hook from './hook.vue'
 import "./form/test.js"
+import UserForm from "./UserForm.vue"
+import UserTable from "./UserTable.vue";
 // import "./index.ts"
+const headers = ref([
+        { title: 'username', key: 'username', sortable: false },
+        { title: 'gender', key: 'gender', sortable: false },
+        { title: 'address', key: 'address', sortable: false },
+        { title: 'hobbies', key: 'hobbies', sortable: false },
+        { title: 'introduction', key: 'introduction', sortable: false },
+        { title: "Actions", key: "actions", sortable: false },
+    ])
+    const items=ref([
+        {id:1, username: 'Alice', gender: 'Female', address: 'New York', hobbies: ['reading', 'painting'], introduction: 'I am a passionate and creative person' },
+        {id:2, username: 'Bob', gender: 'Male', address: 'Los Angeles', hobbies: ['sports', 'cooking'], introduction: 'I am a loving and patient person' },  
+    ])
+    const showUser = (item) => {
+   
+    }
+   const deleteUser = (id:number) => {
+      items.value=items.value.filter(item => item.id!=id)
+  };
 let count=ref(1)
 const changeCount=()=>{
     count.value++

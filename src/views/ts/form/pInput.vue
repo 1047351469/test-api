@@ -27,7 +27,6 @@
       <v-radio label="Option 3" value="option3"></v-radio>
     </v-radio-group>
       <v-text-field
-    
         v-model="name"
         :counter="10"
         :rules="nameRules"
@@ -107,7 +106,7 @@ const form = ref()
 const resetEmailValidation = () => {
   radioField.value.validate(); // 仅清除错误提示
 setTimeout(() => {
-    radioField.value.resetValidation()
+    radioField.value.rules=[]
 }, 3000);
   
 };
