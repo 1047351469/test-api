@@ -91,7 +91,7 @@ function testLodash() {
     _.unset(obj, "c.target");
   
     console.log("删除后对象：", obj);
-    debugger
+    
     return obj;
   }
   
