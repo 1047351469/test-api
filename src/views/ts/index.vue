@@ -1,7 +1,7 @@
 <!--  -->
 <template>
   <div>
-    <user-form></user-form>
+    <user-form v-model.uppercase="message" @sayHello="sayHello" v-model:title="title" v-model:count="count" ></user-form>
     <user-table :headers="headers" :items="items"></user-table>
     <p-input></p-input>
     <func></func>
@@ -29,6 +29,12 @@ import hook from './hook.vue'
 import "./form/test.js"
 import UserForm from "./UserForm.vue"
 import UserTable from "./UserTable.vue";
+const sayHello=(name:string)=>{
+  console.log(`Hello, ${name}!`)
+}
+const message = ref("Hello Vue 3!");
+const title = ref("Vue 3");
+
 // import "./index.ts"
 const headers = ref([
         { title: 'username', key: 'username', sortable: false },

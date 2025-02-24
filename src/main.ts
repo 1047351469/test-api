@@ -41,6 +41,9 @@ app.use(createPinia())
 app.use(router)
 app.use(MathFormatterPlugin);
 app.use(vuetify)
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+app.use(ElementPlus)
 app.mount('#app')
 
 //防抖函数

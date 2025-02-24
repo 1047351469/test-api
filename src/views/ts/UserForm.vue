@@ -1,7 +1,67 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import axios from "axios";
 import UserTable from "./UserTable.vue";
+defineProps<{ modelValue: string, title: string; count: number  }>();
+defineEmits<{
+  (event: "sayHello", value: string): void;
+  (event: "update:modelValue", value: string): void;
+  (event: "update:title", value: string): void;
+  (event: "update:count", value: number): void;
+}>();
 const form=ref<any>(null)
+interface Address{
+  street:string,
+  city:string,
+  zip:string,
+}
+interface User{
+  id:number,
+  name:string,
+  active:boolean,
+  age:number,
+  balance:number,
+  roles:string[],
+  address:Address,
+  preferences:{
+    theme:string,
+    language:"en"|"cn"|"jp",
+    notifications?:true
+  },
+  [key:string]:any
+  
+
+}
+let user:User={
+  id:1,
+  name:"John Doe",
+  active:true,
+  age:30,
+  balance:1000,
+  roles:["admin"],
+  address:{
+    street:"123 Main St",
+    city:"New York",
+    zip:"12345"
+  },
+  preferences:{
+    theme:"light",
+    language:"en",
+    notifications:true
+  },
+  gender:true,
+  job:"student"
+}
+axios.request({
+  method: 'post',
+  url: 'http://localhost:8083/test/getUserConfig',
+  data:user
+})
+ .then(response => {
+     console.log(response);
+  })
+
+
 // Form data
 const formData = ref({
   id:null,
@@ -14,6 +74,7 @@ const formData = ref({
 
 // Address options
 const addressOptions = ["New York", "Los Angeles", "San Francisco", "Chicago", "Houston"];
+
 
 // Hobby options
 const hobbyOptions = ["Reading", "Travel", "Gaming", "Sports"];
@@ -50,9 +111,12 @@ const resetForm = () => {
 
 <template>
   <v-container>
-
+    <input :value="modelValue" @input="$emit('update:modelValue', $event.target.value.toUpperCase())" />
+    <input :value="title" @input="$emit('update:title', $event.target.value)" />
+  <button @click="$emit('update:count', count + 1)">+1</button>
+  {{ count }} {{ title }}
     <v-card class="pa-4" style="width:500px">
-       
+       <p @click="$emit('sayHello', 'caijie')">UserForm{{ modelValue }}</p>
       <v-card-title>UserForm</v-card-title>
       <v-form ref="form">
         <!-- Username -->
