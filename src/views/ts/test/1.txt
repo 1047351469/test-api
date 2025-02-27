@@ -1,0 +1,47 @@
+import { mount } from "@vue/test-utils";
+import FormPage from "@/views/FormPage.vue";
+import { createVuetify } from "vuetify";
+import { createRouter, createWebHistory } from "vue-router";
+import { vi } from "vitest";
+import axios from "axios";
+
+vi.mock("axios"); // 模拟 axios
+
+const vuetify = createVuetify();
+const router = createRouter({
+  history: createWebHistory(),
+  routes: [{ path: "/success", name: "SuccessPage" }],
+});
+
+describe("FormPage.vue", () => {
+  let wrapper;
+
+  beforeEach(async () => {
+    router.push("/");
+    await router.isReady(); // 确保 router 准备就绪
+
+    wrapper = mount(FormPage, {
+      global: {
+        plugins: [vuetify, router], // 挂载 Vuetify 和 Router
+      },
+    });
+  });
+
+  it("填充表单并提交", async () => {
+    await wrapper.find('input[type="text"]').setValue("John Doe");
+    await wrapper.findAll('input[type="radio"]')[0].setValue(); // 选择 Male
+    await wrapper.find("select").setValue("Japan");
+
+    axios.post.mockResolvedValueOnce({ data: { success: true } });
+
+    await wrapper.find("form").trigger("submit.prevent");
+
+    expect(axios.post).toHaveBeenCalledWith("/api/submit", {
+      name: "John Doe",
+      gender: "male",
+      country: "Japan",
+    });
+
+    expect(wrapper.vm.$router.currentRoute.value.path).toBe("/success");
+  });
+});

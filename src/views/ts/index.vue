@@ -1,6 +1,7 @@
 <!--  -->
 <template>
   <div>
+    <form-page></form-page>
     <user-form v-model.uppercase="message" @sayHello="sayHello" v-model:title="title" v-model:count="count" ></user-form>
     <user-table :headers="headers" :items="items"></user-table>
     <p-input></p-input>
@@ -18,6 +19,7 @@
 </template>
 
 <script setup lang="ts">
+import FormPage from "./test/FormPage.vue"
 import PInput from "./form/pInput.vue"
 import { reactive,toRefs,onMounted,ref,provide} from 'vue'
 import func from "./func.vue"
