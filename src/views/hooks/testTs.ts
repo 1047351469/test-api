@@ -80,5 +80,31 @@ const obj = {
 const deepCopy = structuredClone(obj);
 
 console.log(deepCopy); // 输出: { a: 1, b: { c: 2 } }
-console.log(deepCopy.b==obj.b); 
+console.log(deepCopy.b==obj.b);
+let person={
+  name:"cai",
+  age:1
+}
+function getVal(this:typeof person,n:keyof typeof person){
+  return this[n]
+}
+console.log(getVal.call(person,"age"))
+type Person={
+  id:number,
+  name:string,
+  age:number
+}
+// Partial可选 Required必须  Readonly只读 Pick挑选 Omit对象类型排除 ReturnType
+// NonNullable Record<K, T>键值对 Exclude排除联合类型 Extract提取
+let person1: Partial<Person> = { name: "Alice" }
+let person2: Pick<Person,"name"> = { name: "Alice" }
+let person3: Omit<Person,"name"> = { id:1,age:1 }
+function getUser() {
+  return { name: "Alice", age: 25 };
+}
+// ts一般在ref defineProps defineEmits dom自动focus request<T>()T为接口返回数据类型
+// storeToRefs解构出来数据才有响应式
+// https://zhousg.github.io/patient-h5-note/project/
+
+export{}
   
