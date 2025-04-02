@@ -16,3 +16,20 @@ type ExtractFlatLayer<
 type Merge<T> = {
   [K in keyof T]: T[K];
 };
+
+type MyType = {
+  level1A: {
+    level2A: {
+      level3A: string;
+      level3B: string;
+    };
+    level2B: {
+      level3C: string;
+    };
+  };
+  level1B: {
+    level2C: {
+      level3D: string;
+    };
+  };
+};
