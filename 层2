@@ -1,25 +1,20 @@
-type IsPlainObject<T> =
-  T extends object
-    ? T extends Function | any[] | string
-      ? false
-      : true
-    : false;
+type ExtractLayer<T, Depth extends number, C extends any[] = []> =
+  C['length'] extends Depth
+    ? T extends object
+      ? { [K in keyof T]: string }
+      : {}
+    : T extends object
+      ? ExtractLayerInner<T, Depth, [...C, 1]>
+      : {};
 
-// 合并所有键，去掉联合
-type Merge<T> = {
-  [K in keyof T]: T[K];
-};
-
-type ExtractOnlyLayerAsString<
-  T,
-  TargetDepth extends number,
-  CurrentDepth extends any[] = []
-> = CurrentDepth['length'] extends TargetDepth
-  ? IsPlainObject<T> extends true
-    ? Merge<{ [K in keyof T]: string }>
+type ExtractLayerInner<T, Depth extends number, C extends any[]> = {
+  [K in keyof T]: ExtractLayer<T[K], Depth, C>
+} extends infer O
+  ? O extends object
+    ? Flatten<O>
     : {}
-  : IsPlainObject<T> extends true
-    ? Merge<{
-        [K in keyof T]: ExtractOnlyLayerAsString<T[K], TargetDepth, [...CurrentDepth, 1]>
-      }>
-    : {};
+  : {};
+
+type Flatten<T> = {
+  [K in keyof T]: T[K]
+};
