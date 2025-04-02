@@ -1,8 +1,17 @@
-type SetLayerToString<T, Depth extends number, Current extends any[] = []> =
-  Current['length'] extends Depth
+type ExtractLayerAsString<
+  T,
+  TargetDepth extends number,
+  CurrentDepth extends any[] = []
+> = CurrentDepth['length'] extends TargetDepth
+  ? T extends object
     ? { [K in keyof T]: string }
-    : T extends object
-      ? {
-          [K in keyof T]: SetLayerToString<T[K], Depth, [...Current, any]>
-        }
-      : T;
+    : never
+  : T extends object
+    ? {
+        [K in keyof T]: ExtractLayerAsString<
+          T[K],
+          TargetDepth,
+          [...CurrentDepth, 1]
+        >
+      }[keyof T] // 只返回下一层展开的字段
+    : never;
