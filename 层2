@@ -1,20 +1,18 @@
-type ExtractLayer<T, Depth extends number, C extends any[] = []> =
-  C['length'] extends Depth
-    ? T extends object
-      ? { [K in keyof T]: string }
-      : {}
-    : T extends object
-      ? ExtractLayerInner<T, Depth, [...C, 1]>
-      : {};
-
-type ExtractLayerInner<T, Depth extends number, C extends any[]> = {
-  [K in keyof T]: ExtractLayer<T[K], Depth, C>
-} extends infer O
-  ? O extends object
-    ? Flatten<O>
+type ExtractFlatLayer<
+  T,
+  TargetDepth extends number,
+  CurrentDepth extends any[] = []
+> = CurrentDepth['length'] extends TargetDepth
+  ? T extends object
+    ? { [K in keyof T]: string }
     : {}
-  : {};
+  : T extends object
+    ? Merge<{
+        [K in keyof T]: ExtractFlatLayer<T[K], TargetDepth, [...CurrentDepth, 1]>
+      }>
+    : {};
 
-type Flatten<T> = {
-  [K in keyof T]: T[K]
+// 把对象类型合并为一个，不让它变联合
+type Merge<T> = {
+  [K in keyof T]: T[K];
 };
