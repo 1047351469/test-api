@@ -1,7 +1,7 @@
 function parseToTsType(input) {
   const lines = input.trim().split('\n');
   const stack = [];
-  const root = {};
+  const root = {};  
 
   for (const line of lines) {
     const match = line.match(/^(\d+)\s+(.+?)\s+([A-Z0-9\-]+)$/);
