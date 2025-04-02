@@ -5,20 +5,30 @@ type IsPlainObject<T> =
       : true
     : false;
 
-type ExtractOnlyLayerAsString<
+type Merge<T> = {
+  [K in keyof T]: T[K];
+};
+
+// 把多个对象合并为一个对象（专门去掉联合）
+type UnionToFlatObject<U> = Merge<
+  {
+    [K in keyof U]: U[K];
+  } & {}
+>;
+
+// 主类型：提取第 N 层为扁平 string 类型
+type FlattenSpecificLayerAsString<
   T,
-  TargetDepth extends number,
-  CurrDepth extends any[] = []
-> = CurrDepth['length'] extends TargetDepth
+  Depth extends number,
+  Curr extends any[] = []
+> = Curr['length'] extends Depth
   ? IsPlainObject<T> extends true
-    ? { [K in keyof T]: string }
+    ? Merge<{ [K in keyof T]: string }>
     : {}
   : IsPlainObject<T> extends true
-    ? {
-        [K in keyof T]: ExtractOnlyLayerAsString<T[K], TargetDepth, [...CurrDepth, 1]>
-      }[keyof T] extends infer U
-      ? U extends object
-        ? { [K in keyof U]: U[K] }
-        : {}
-      : {}
-  : {};
+    ? UnionToFlatObject<
+        {
+          [K in keyof T]: FlattenSpecificLayerAsString<T[K], Depth, [...Curr, 1]>
+        }[keyof T]
+      >
+    : {};
