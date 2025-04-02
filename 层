@@ -26,3 +26,17 @@ type ExtractLayerAsString<
         >
       }[keyof T]
     : never;
+
+
+type Original = {
+  a: {
+    x: {
+      i: number;
+      j: boolean;
+    };
+    y: string;
+  };
+  b: number;
+};
+
+type Result = ExtractLayerAsString<Original, 2>;
