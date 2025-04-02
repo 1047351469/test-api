@@ -1,0 +1,8 @@
+type SetLayerToString<T, Depth extends number, Current extends any[] = []> =
+  Current['length'] extends Depth
+    ? { [K in keyof T]: string }
+    : T extends object
+      ? {
+          [K in keyof T]: SetLayerToString<T[K], Depth, [...Current, any]>
+        }
+      : T;
