@@ -1,17 +1,28 @@
+type IsPlainObject<T> =
+  T extends object
+    ? T extends Function
+      ? false
+      : T extends any[]
+        ? false
+        : T extends string
+          ? false
+          : true
+    : false;
+
 type ExtractLayerAsString<
   T,
   TargetDepth extends number,
   CurrentDepth extends any[] = []
 > = CurrentDepth['length'] extends TargetDepth
-  ? T extends object
+  ? IsPlainObject<T> extends true
     ? { [K in keyof T]: string }
     : never
-  : T extends object
+  : IsPlainObject<T> extends true
     ? {
         [K in keyof T]: ExtractLayerAsString<
           T[K],
           TargetDepth,
           [...CurrentDepth, 1]
         >
-      }[keyof T] // 只返回下一层展开的字段
+      }[keyof T]
     : never;
