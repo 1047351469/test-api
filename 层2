@@ -1,4 +1,4 @@
-type IsPlainObject<T> =
+ type IsPlainObject<T> =
   T extends object
     ? T extends Function
       ? false
