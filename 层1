@@ -1,30 +1,24 @@
-type IsObject<T> = T extends object
-  ? T extends Function
-    ? false
-    : true
-  : false;
+type IsPlainObject<T> =
+  T extends object
+    ? T extends Function
+      ? false
+      : T extends any[]
+        ? false
+        : T extends string
+          ? false
+          : true
+    : false;
 
-type ExtractFlatStringLayer<
+type ExtractExactLayerAsFlatString<
   T,
-  TargetDepth extends number,
-  CurrentDepth extends any[] = [],
-  Result = {}
-> = CurrentDepth['length'] extends TargetDepth
-  ? T extends object
-    ? {
-        [K in keyof T]: string;
-      }
+  Depth extends number,
+  Curr extends any[] = []
+> = Curr['length'] extends Depth
+  ? IsPlainObject<T> extends true
+    ? { [K in keyof T]: string }
     : {}
-  : T extends object
+  : IsPlainObject<T> extends true
     ? {
-        [K in keyof T]: ExtractFlatStringLayer<
-          T[K],
-          TargetDepth,
-          [...CurrentDepth, 1]
-        >;
-      }[keyof T] extends infer O
-      ? O extends object
-        ? { [K in keyof O]: O[K] }
-        : {}
-      : {}
-  : {};
+        [K in keyof T]: ExtractExactLayerAsFlatString<T[K], Depth, [...Curr, 1]>
+      }[keyof T] // 展平下一层
+    : {};
