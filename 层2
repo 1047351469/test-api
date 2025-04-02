@@ -1,35 +1,24 @@
- type IsPlainObject<T> =
+type IsPlainObject<T> =
   T extends object
-    ? T extends Function
+    ? T extends Function | any[] | string
       ? false
-      : T extends any[]
-        ? false
-        : T extends string
-          ? false
-          : true
+      : true
     : false;
 
-// 工具类型：合并联合类型为一个对象
-type UnionToIntersection<U> =
-  (U extends any ? (k: U) => void : never) extends ((k: infer I) => void)
-    ? I
-    : never;
-
-// 提取某一层并展平成字符串类型
-type ExtractExactLayerAsFlatString<
+type ExtractOnlyLayerAsString<
   T,
-  Depth extends number,
-  Curr extends any[] = []
-> = Curr['length'] extends Depth
+  TargetDepth extends number,
+  CurrDepth extends any[] = []
+> = CurrDepth['length'] extends TargetDepth
   ? IsPlainObject<T> extends true
     ? { [K in keyof T]: string }
     : {}
   : IsPlainObject<T> extends true
-    ? UnionToIntersection<{
-        [K in keyof T]: ExtractExactLayerAsFlatString<
-          T[K],
-          Depth,
-          [...Curr, 1]
-        >;
-      }[keyof T]>
-    : {};
+    ? {
+        [K in keyof T]: ExtractOnlyLayerAsString<T[K], TargetDepth, [...CurrDepth, 1]>
+      }[keyof T] extends infer U
+      ? U extends object
+        ? { [K in keyof U]: U[K] }
+        : {}
+      : {}
+  : {};
