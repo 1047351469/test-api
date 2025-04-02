@@ -1,0 +1,10 @@
+type KeysAtLevel<T, L extends number, C extends any[] = [1]> =
+  C['length'] extends L
+    ? keyof T
+    : T extends object
+      ? {
+          [K in keyof T]: T[K] extends object
+            ? KeysAtLevel<T[K], L, [...C, 1]>
+            : never
+        }[keyof T]
+      : never;
