@@ -1,0 +1,101 @@
+// ===============================
+// ログ出力ユーティリティ（Vue3 + TypeScript）
+// - Viteの.envから動的設定を読み込み
+// - ログレベル別に制御
+// - 複数引数対応
+// - タイムスタンプ表示オプション
+// ===============================
+
+export type LogLevel = 'debug' | 'info' | 'warn' | 'error'
+
+export interface LoggerOptions {
+  enabled: boolean                   // ログ出力を有効にするか
+  level: LogLevel                    // 出力レベル（debug, info, warn, error）
+  showTimestamp?: boolean           // タイムスタンプを表示するか
+  environment?: 'dev' | 'prod'      // 実行環境（開発 or 本番）
+}
+
+// ログレベルの優先順位
+const levelPriority: Record<LogLevel, number> = {
+  debug: 1,
+  info: 2,
+  warn: 3,
+  error: 4
+}
+
+class Logger {
+  private options: LoggerOptions
+
+  constructor(options: LoggerOptions) {
+    this.options = options
+  }
+
+  // このログレベルで出力すべきか判定
+  private shouldLog(level: LogLevel): boolean {
+    if (!this.options.enabled) return false
+    if (this.options.environment === 'prod') return false
+    return levelPriority[level] >= levelPriority[this.options.level]
+  }
+
+  // ログのヘッダーをフォーマット（タイムスタンプ + レベル）
+  private formatPrefix(level: LogLevel): string {
+    const timestamp = this.options.showTimestamp ? `[${new Date().toISOString()}]` : ''
+    return `${timestamp} [${level.toUpperCase()}]`
+  }
+
+  // 各ログメソッド（可変引数対応）
+  debug(...args: unknown[]) {
+    if (this.shouldLog('debug')) {
+      console.debug(this.formatPrefix('debug'), ...args)
+    }
+  }
+
+  info(...args: unknown[]) {
+    if (this.shouldLog('info')) {
+      console.info(this.formatPrefix('info'), ...args)
+    }
+  }
+
+  warn(...args: unknown[]) {
+    if (this.shouldLog('warn')) {
+      console.warn(this.formatPrefix('warn'), ...args)
+    }
+  }
+
+  error(...args: unknown[]) {
+    if (this.shouldLog('error')) {
+      console.error(this.formatPrefix('error'), ...args)
+    }
+  }
+
+  // 動的にオプションを更新（例：ユーザーが開発モードをONにした時など）
+  setOptions(newOptions: Partial<LoggerOptions>) {
+    this.options = { ...this.options, ...newOptions }
+  }
+}
+
+// Vite の .env からログ設定を読み込み
+const logger = new Logger({
+  enabled: import.meta.env.VITE_LOG_ENABLED === 'true',                      // VITE_LOG_ENABLED=true
+  level: import.meta.env.VITE_LOG_LEVEL as LogLevel || 'info',              // VITE_LOG_LEVEL=debug/info/warn/error
+  showTimestamp: import.meta.env.VITE_LOG_TIMESTAMP === 'true',             // VITE_LOG_TIMESTAMP=true
+  environment: import.meta.env.MODE === 'development' ? 'dev' : 'prod'
+})
+
+export default logger
+
+
+VITE_LOG_ENABLED=true
+VITE_LOG_LEVEL=debug
+VITE_LOG_TIMESTAMP=true
+
+
+VITE_LOG_ENABLED=false
+VITE_LOG_LEVEL=warn
+VITE_LOG_TIMESTAMP=false
+
+import logger from '@/utils/logger'
+
+logger.info('API 呼び出し成功:', responseData)
+logger.warn('入力値が無効です:', input)
+logger.error('システムエラー:', error)
