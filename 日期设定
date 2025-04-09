@@ -1,0 +1,90 @@
+<template>
+  <div>現在の日付：{{ currentDate }}</div>
+</template>
+
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import axios from 'axios'
+import dayjs from 'dayjs'
+
+// 日付を格納するリアクティブ変数
+const currentDate = ref<string>('')
+
+// サーバーから日付を取得する関数
+const fetchServerDate = async (): Promise<string | null> => {
+  try {
+    const res = await axios.get('/api/server-date') // Mock.js の API を呼び出す
+    const serverDate = dayjs(res.data.serverDate)
+
+    // 正しい日付かどうか確認
+    if (serverDate.isValid()) {
+      return serverDate.format('YYYY-MM-DD') // フォーマットして返す
+    } else {
+      throw new Error('無効な日付形式')
+    }
+  } catch (e) {
+    console.warn('サーバー日付の取得に失敗：', e)
+    return null
+  }
+}
+
+// コンポーネントのマウント時に日付を初期化
+onMounted(async () => {
+  const serverDate = await fetchServerDate()
+
+  // サーバー日付が取得できなければ、ローカルシステム日付を使用
+  currentDate.value = serverDate || dayjs().format('YYYY-MM-DD')
+})
+</script>
+
+import Mock from 'mockjs'
+
+// サーバー日付を返すモックAPI
+Mock.mock('/api/server-date', 'get', () => {
+  return {
+    serverDate: new Date().toISOString() // ISO形式で返す
+  }
+})
+
+import './mock/server-date'
+
+当然可以，下面是刚才那段思考过程的日语说明，适合用于向客户解释当前的技术限制和实现可能性：
+
+
+---
+
+日语版：
+
+今回、御社のシステム機能をフロントエンドから呼び出す際に、ユーザーに「進捗バー（プログレスバー）」を表示して、処理状況が分かるようにしたいと考えておりました。
+
+最初は nprogress という一般的なライブラリを使って実装を試みました。このライブラリは、Axiosと連携して通信中に画面上部に進捗バーを表示することができます。ただし、この進捗バーは実際の進捗を反映しているわけではなく、一定間隔で疑似的に進んでいく仕組みになっております。
+
+そのため、「本当にどのくらい処理が進んでいるのか」をユーザーに正確に伝えることはできません。
+
+次に「実際の進捗を表示できる方法」について調査しました。結論として、以下の2つの場合に限って、正確な進捗をフロントエンド側で取得することが可能です：
+
+1. ファイルのアップロードやダウンロード処理：
+この場合、Axiosが提供する onUploadProgress や onDownloadProgress を利用すれば、処理中のバイト数を取得でき、実際の進捗率（％）を表示できます。
+
+
+2. バックエンドが「非同期タスク」として処理し、進捗確認用のAPIを提供している場合：
+例えば、最初のリクエストで taskId を返し、それを使って一定間隔で進捗確認APIを呼び出すと、現在の進行状況（例：40%、80%、完了）を取得できます。
+
+
+
+しかし、現時点で御社のシステムからは taskId のような識別子も進捗確認用のエンドポイントも提供されていないため、フロントエンド側で「実際の進捗」を表示することはできない状況です。
+
+このような場合、ユーザーの体験を改善するためには、
+
+「疑似進捗バー」を使って処理中であることを伝える
+または
+
+バックエンド側で「進捗確認API」の提供をご検討いただく
+といった対応が考えられます。
+
+
+
+---
+
+如需调整语气更客气或技术性更强，我也可以帮你润色。需要的话请告诉我目标对象是谁（客户工程师 or 非技术客户）。
+
