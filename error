@@ -1,0 +1,95 @@
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
+
+// Axiosインスタンスを作成
+const service = axios.create({
+  baseURL: '/api',       // APIのベースURL
+  timeout: 10000,        // タイムアウト設定（ミリ秒）
+})
+
+// リクエストインターセプター
+service.interceptors.request.use(
+  (config: AxiosRequestConfig) => {
+    // トークンをヘッダーに追加（必要な場合）
+    const token = localStorage.getItem('token')
+    if (token) {
+      config.headers = config.headers || {}
+      config.headers.Authorization = `Bearer ${token}`
+    }
+    return config
+  },
+  (error: AxiosError) => {
+    // リクエスト設定エラー
+    console.error('リクエストエラー:', error)
+    return Promise.reject(error)
+  }
+)
+
+// レスポンスインターセプター
+service.interceptors.response.use(
+  (response: AxiosResponse) => {
+    // サーバーが正常に応答した場合（ステータス200）
+    const res = response.data
+
+    /**
+     * 想定されるサーバーのレスポンス構造：
+     * {
+     *   code: number,        // 業務用ステータスコード（例：0 = 成功）
+     *   message: string,     // メッセージ
+     *   data: any            // 実データ
+     * }
+     */
+
+    if (res.code !== 0) {
+      // 業務エラーとみなす
+      console.error('業務エラー:', res.message || '不明なエラー')
+      return Promise.reject(new Error(res.message || '業務エラー'))
+    } else {
+      // 正常データを返す
+      return res.data
+    }
+  },
+  (error: AxiosError) => {
+    // サーバーからのエラー応答またはネットワークエラー
+    if (error.response) {
+      const status = error.response.status
+      switch (status) {
+        case 400:
+          console.error('400: リクエストが不正です')
+          break
+        case 401:
+          console.error('401: 未認証です（ログインが必要です）')
+          break
+        case 403:
+          console.error('403: 権限がありません')
+          break
+        case 404:
+          console.error('404: リソースが見つかりません')
+          break
+        case 500:
+          console.error('500: サーバーエラーが発生しました')
+          break
+        default:
+          console.error(`HTTPエラー（ステータスコード: ${status}）`)
+      }
+    } else if (error.request) {
+      console.error('ネットワークエラー：応答がありません')
+    } else {
+      console.error('通信エラー:', error.message)
+    }
+    return Promise.reject(error)
+  }
+)
+
+export default service
+
+import axios from '@/utils/axios'
+
+const loadData = async () => {
+  try {
+    const result = await axios.get('/some-api')
+    console.log('取得成功:', result)
+  } catch (e) {
+    // エラー処理はインターセプター内で済んでいるので、ここは任意
+    console.warn('API呼び出しに失敗しました')
+  }
+}
